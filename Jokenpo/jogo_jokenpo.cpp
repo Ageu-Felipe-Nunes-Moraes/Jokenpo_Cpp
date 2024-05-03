@@ -9,130 +9,130 @@ using namespace std;
 
 class Jokenpo{
 private:
-    string escolha_maquina;
-    string lista_opcoes[3] = {"PEDRA", "PAPEL", "TESOURA"};
-    int escolha_pessoa, quantidade_escolhida;
-    bool variavel_controle;
+    string machine_choice;
+    string options_list[3] = {"PEDRA", "PAPEL", "TESOURA"};
+    int person_choice, quantity_chosen;
+    bool control_variable;
 
 public:
 
     Jokenpo(){
-        cria_linha_dupla();
+        creats_double_line();
         cout << "JOKENPÔ - CONTRA O COMPUTADOR" << endl;
-        cria_linha_dupla();
-        escolha_maquina = "";
-        escolha_pessoa = 0;
-        variavel_controle = true;
+        creats_double_line();
+        machine_choice = "";
+        person_choice = 0;
+        control_variable = true;
     }
 
 
-    void tempo_delay(){
+    void delay_time(){
         cout << "COMPUTADOR PENSANDO..." << endl;
-        int lista_quantidade_pontos[9] = {2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int list_points_quantity[9] = {2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-        int tamanho = sizeof(lista_quantidade_pontos) / sizeof(lista_quantidade_pontos[0]); // Calcula o tamanho da lista
+        int size = sizeof(list_points_quantity) / sizeof(list_points_quantity[0]); // Calcula o tamanho da lista
 
         // Inicializa o gerador de números aleatórios com o tempo atual
         srand(time(0));
 
         // Escolha aleatória de um índice dentro do intervalo válido
-        int indice_aleatorio = rand() % tamanho;
+        int random_index = rand() % size;
 
         // Item escolhido aleatoriamente
-        int quantidade_escolhida = lista_quantidade_pontos[indice_aleatorio];
+        quantity_chosen = list_points_quantity[random_index];
 
-        for (int i = 0; i < quantidade_escolhida; i++){
-            float lista_segundos[5] = {0.1, 0.2, 0.3, 0.4, 0.5};
-            int tamanho_segundos = sizeof(lista_segundos) / sizeof(lista_segundos[0]);
-            int indice_segundo_aleatorio = rand() % tamanho_segundos;
-            float segundo_escolhido = lista_quantidade_pontos[indice_segundo_aleatorio];
-            this_thread::sleep_for(chrono::milliseconds(static_cast<int>(segundo_escolhido * 100))); // Converte segundos para milissegundos
+        for (int i = 0; i < quantity_chosen; i++){
+            float seconds_list[5] = {0.1, 0.2, 0.3, 0.4, 0.5};
+            int seconds_size = sizeof(seconds_list) / sizeof(seconds_list[0]);
+            int second_random_index = rand() % seconds_size;
+            float seconds_chosen = list_points_quantity[second_random_index];
+            this_thread::sleep_for(chrono::milliseconds(static_cast<int>(seconds_chosen * 100))); // Converte segundos para milissegundos
             cout << ".\n" << flush;
         }
-        cria_linha_dupla();
+        creats_double_line();
     }
 
-    void cria_linha_dupla(){
+    void creats_double_line(){
         cout << "========================================" << endl;
     }
 
-    void cria_linha_simples(){
+    void creates_simple_line(){
         cout << "----------------------------------------" << endl;
     }
 
-    void introducao(){;
+    void introduction(){;
         cout << "INSTRUCÕES DE COMO JOGAR:" << endl;
-        cria_linha_simples();
+        creates_simple_line();
         cout << "1--PEDRA" << endl;
         cout << "2--PAPEL" << endl;
         cout << "3--TESOURA" << endl;
         cout << "0--SAIR" << endl;
-        cria_linha_simples();
+        creates_simple_line();
     }
 
-    string valor_escolha_computador(){
-        int tamanho = sizeof(lista_opcoes) / sizeof(lista_opcoes[0]); // Calcula o tamanho da lista
+    string computer_choice_value(){
+        int size = sizeof(options_list) / sizeof(options_list[0]); // Calcula o tamanho da lista
 
         // Inicializa o gerador de números aleatórios com o tempo atual
         srand(time(0));
 
         // Escolha aleatória de um índice dentro do intervalo válido
-        int indice_aleatorio = rand() % tamanho;
+        int random_index = rand() % size;
 
         // Item escolhido aleatoriamente
-        string escolha = lista_opcoes[indice_aleatorio];
+        string choice = options_list[random_index];
 
-        return escolha;
+        return choice;
     }
 
-    int valor_escolha_pessoa(){
+    int person_choice_value(){
         cout << "DIGITE O NÚMERO DA SUA ESCOLHA: ";
-        cin >> escolha_pessoa;
+        cin >> person_choice;
         cin.ignore();
-        cria_linha_simples();
-        return escolha_pessoa;
+        creates_simple_line();
+        return person_choice;
     }
 
-    void mostra_escolhas(){
+    void show_choices(){
    
-        while (variavel_controle){
-            escolha_pessoa = valor_escolha_pessoa();
+        while (control_variable){
+            person_choice = person_choice_value();
             
-            if (escolha_pessoa == 0){
+            if (person_choice == 0){
                 cout << "FIM DE JOGO!!!" << endl;
-                variavel_controle = false;
+                control_variable = false;
             }
 
-            else if (escolha_pessoa > 0 && escolha_pessoa < 4){
-                tempo_delay();
-                escolha_maquina = valor_escolha_computador();
-                cout << "HUMANO(VOCÊ): " << lista_opcoes[escolha_pessoa - 1] << endl;
-                cout << "COMPUTADOR:" << escolha_maquina << endl;
-                cria_linha_simples();
-                verifica_vencedor();
-                variavel_controle = false;
+            else if (person_choice > 0 && person_choice < 4){
+                delay_time();
+                machine_choice = computer_choice_value();
+                cout << "HUMANO(VOCÊ): " << options_list[person_choice - 1] << endl;
+                cout << "COMPUTADOR:" << machine_choice << endl;
+                creates_simple_line();
+                checks_winner();
+                control_variable = false;
             }
 
             else{
                 cout << "VALOR INVÁLIDO!!! TENTE NOVAMENTE!!" << endl;
-                cria_linha_dupla();
+                creats_double_line();
             }
         }
     }
 
-    void verifica_vencedor(){
-        if (lista_opcoes[escolha_pessoa - 1] == escolha_maquina){
+    void checks_winner(){
+        if (options_list[person_choice - 1] == machine_choice){
             cout << "EMPATE!!!" << endl;
         }
 
         else{
                 
-            if (lista_opcoes[escolha_pessoa - 1] == "PEDRA" && escolha_maquina == "TESOURA" || lista_opcoes[escolha_pessoa - 1] == "PAPEL" && escolha_maquina == "PEDRA" || lista_opcoes[escolha_pessoa - 1] == "TESOURA" && escolha_maquina == "PAPEL"){
+            if (options_list[person_choice - 1] == "PEDRA" && machine_choice == "TESOURA" || options_list[person_choice - 1] == "PAPEL" && machine_choice == "PEDRA" || options_list[person_choice - 1] == "TESOURA" && machine_choice == "PAPEL"){
 
                 cout << "VOCÊ VENCEU!!!" << endl;
             }
 
-            else if (escolha_pessoa == 0){
+            else if (person_choice == 0){
                 cout << "" << endl;
             }    
                 
@@ -140,16 +140,16 @@ public:
                 cout << "VOCÊ PERDEU" << endl;
             }
         }
-        if (escolha_pessoa != 0){
-            cria_linha_dupla();
-            mostra_escolhas();
+        if (person_choice != 0){
+            creats_double_line();
+            show_choices();
         }
     }        
 };
 
 int main(){
-    Jokenpo iniciar_jogo;
-    iniciar_jogo.introducao();
-    iniciar_jogo.mostra_escolhas();
+    Jokenpo start_game;
+    start_game.introduction();
+    start_game.show_choices();
     return 0;
 }
