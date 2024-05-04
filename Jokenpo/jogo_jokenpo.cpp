@@ -1,22 +1,25 @@
 
-#include <iostream>
-#include <cstdlib> // para srand e rand
-#include <ctime>   // para time
-#include <chrono>  // para std::chrono::seconds
-#include <thread>  // para std::this_thread::sleep_for
+#include <iostream> // to input and output
+#include <cstdlib> // to srand and rand
+#include <ctime>   // to time
+#include <chrono>  // to std::chrono::seconds
+#include <thread>  // to std::this_thread::sleep_for
 
-using namespace std;
+// to facilitate the use of std
+using namespace std; 
 
-class Jokenpo{
-private:
+// Escope of the game
+class Jokenpo{ 
+// Variables Privates    
+private: 
     string machine_choice;
     string options_list[3] = {"PEDRA", "PAPEL", "TESOURA"};
     int person_choice, quantity_chosen;
     bool control_variable;
 
-public:
-
-    Jokenpo(){
+public: 
+    // Constructor Method
+    Jokenpo(){ 
         creats_double_line();
         cout << "JOKENPÔ - CONTRA O COMPUTADOR" << endl;
         creats_double_line();
@@ -25,22 +28,24 @@ public:
         control_variable = true;
     }
 
-
-    void delay_time(){
+    // Method to delay time
+    void delay_time(){ 
         cout << "COMPUTADOR PENSANDO..." << endl;
         int list_points_quantity[9] = {2, 3, 4, 5, 6, 7, 8, 9, 10};
+       
+        // Calculates list size
+        int size = sizeof(list_points_quantity) / sizeof(list_points_quantity[0]); 
 
-        int size = sizeof(list_points_quantity) / sizeof(list_points_quantity[0]); // Calcula o tamanho da lista
-
-        // Inicializa o gerador de números aleatórios com o tempo atual
+        // Initializes the random number generator with the current time
         srand(time(0));
 
-        // Escolha aleatória de um índice dentro do intervalo válido
+        // Randomly choosing an index from a valid range
         int random_index = rand() % size;
 
-        // Item escolhido aleatoriamente
+        // randomly chosen item
         quantity_chosen = list_points_quantity[random_index];
 
+        // choice of a random time for the computer to respond
         for (int i = 0; i < quantity_chosen; i++){
             float seconds_list[5] = {0.1, 0.2, 0.3, 0.4, 0.5};
             int seconds_size = sizeof(seconds_list) / sizeof(seconds_list[0]);
@@ -51,15 +56,15 @@ public:
         }
         creats_double_line();
     }
-
+    // Creates double line on screen
     void creats_double_line(){
         cout << "========================================" << endl;
     }
-
+    // Creates simple line on screen
     void creates_simple_line(){
         cout << "----------------------------------------" << endl;
     }
-
+    // Shows initial information
     void introduction(){;
         cout << "INSTRUCÕES DE COMO JOGAR:" << endl;
         creates_simple_line();
@@ -70,21 +75,15 @@ public:
         creates_simple_line();
     }
 
+    // Function to computer choice
     string computer_choice_value(){
-        int size = sizeof(options_list) / sizeof(options_list[0]); // Calcula o tamanho da lista
-
-        // Inicializa o gerador de números aleatórios com o tempo atual
+        int size = sizeof(options_list) / sizeof(options_list[0]);
         srand(time(0));
-
-        // Escolha aleatória de um índice dentro do intervalo válido
         int random_index = rand() % size;
-
-        // Item escolhido aleatoriamente
         string choice = options_list[random_index];
-
         return choice;
     }
-
+    // Function to person choice
     int person_choice_value(){
         cout << "DIGITE O NÚMERO DA SUA ESCOLHA: ";
         cin >> person_choice;
@@ -92,17 +91,17 @@ public:
         creates_simple_line();
         return person_choice;
     }
-
+    // Show both choices
     void show_choices(){
-   
+        // Will happen as long as the variable is True
         while (control_variable){
             person_choice = person_choice_value();
-            
+            // If the choice is equal to zero, the game is over
             if (person_choice == 0){
                 cout << "FIM DE JOGO!!!" << endl;
                 control_variable = false;
             }
-
+            // Shows picks, call delay, simple line and winner
             else if (person_choice > 0 && person_choice < 4){
                 delay_time();
                 machine_choice = computer_choice_value();
@@ -112,14 +111,14 @@ public:
                 checks_winner();
                 control_variable = false;
             }
-
+            // Error treatment 
             else{
                 cout << "VALOR INVÁLIDO!!! TENTE NOVAMENTE!!" << endl;
                 creats_double_line();
             }
         }
     }
-
+    // Checks winner
     void checks_winner(){
         if (options_list[person_choice - 1] == machine_choice){
             cout << "EMPATE!!!" << endl;
@@ -147,7 +146,9 @@ public:
     }        
 };
 
+// Main code
 int main(){
+    // Instance with functions calls 
     Jokenpo start_game;
     start_game.introduction();
     start_game.show_choices();
